@@ -4,6 +4,7 @@ const express = require('express'),
 const app = express();
 
 // log all requests
+// Movies
 let topMovies = [
     {
         title: 'Scream',
@@ -58,6 +59,13 @@ app.get('/movies', (req, res) => {
 
 app.use(express.static('public'));
 
+// error handling
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+// listen for request
 app.listen(8080, () => {
     console.log('Your app is listening on port 8080.');
 })
