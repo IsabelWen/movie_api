@@ -1,9 +1,12 @@
 const express = require('express'),
- morgan = require('morgan'),
- fs = require('fs'),
+ morgan = require('morgan');
+
 const app = express();
 
 // log all requests
+app.use(morgan('common'));
+
+
 // Movies
 let topMovies = [
     {
