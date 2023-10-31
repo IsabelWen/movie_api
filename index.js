@@ -117,6 +117,19 @@ app.get('/movies/:title', (req, res) => {
         res.status(400).send('There is no such movie.')
     }
 })
+
+// READ genre by name
+app.get('/movies/genre/:genreName', (req, res) => {
+    const genreName = req.params.genreName;
+    const genre = topMovies.find( movie => movie.genre.genreName === genreName ).genre;
+
+    if (genre) {
+        res.status(200).json(genre);
+    } else {
+        res.status(400).send('There is no such genre.')
+    }
+})
+
 app.use(express.static('public'));
 
 // error handling
