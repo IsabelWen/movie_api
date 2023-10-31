@@ -10,7 +10,18 @@ app.use(bodyParser.json()); //any time using req.body, the data will be expected
 app.use(morgan('common'));
 
 // Users
-let users = []
+let users = [
+    {
+        id: 1,
+        name: 'Isy',
+        favoriteMovies: ['Scream']
+    },
+    {
+        id: 2,
+        name: 'Jeff',
+        favoriteMovies: []
+    }
+]
 
 // Movies
 let topMovies = [
