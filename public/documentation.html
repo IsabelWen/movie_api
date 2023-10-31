@@ -11,5 +11,140 @@
         The web application provides users with access to information about different movies, directors, and genres.<br>
         Users are able to sign up, update their personal information, and create a list of their favorite movies.
     </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Business Logic</th>
+                <th>URL</th>
+                <th>HTTP method</th>
+                <th>Request body data format</th>
+                <th>Response body data format</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Return a list of ALL movies to the user</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about all movies</td>
+            </tr>
+            <tr>
+                <td>Return data about a single movie by title to the user</td>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single movie, containing title, year, genre, director. Example:
+                    <code>
+                        {
+                            "title": "Halloween",
+                            "year": "1978",
+                            "genre": {
+                                "genreName": "Horror",
+                                "description": "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes."
+                            },
+                            "director": {
+                                "directorName": "John Carpenter",
+                                "birth": "1948"
+                            }
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return data about a genre by name</td>
+                <td>/movies/genre/[genreName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single genre, containing genre name, description. Example:
+                    <code>
+                        {
+                            "genreName": "Horror",
+                            "description": "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes."
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return data about a director by name</td>
+                <td>/movies/directors/[directorName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single director, containing director name, birth year. Example:
+                    <code>
+                        {
+                            "directorName": "Nahnatchka Khan",
+                            "birth": "1973"
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Allow new users to register</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>A JSON object holding data about the user to add, structured like:
+                    <code>
+                        {
+                            "name": "Lara",
+                            "favoriteMovies": []
+                        }
+                    </code>
+                </td>
+                <td>A JSON object holding data about the user that was added, including an ID. Example:
+                    <code>
+                        {
+                            "name": "Lara",
+                            "favoriteMovies": [],
+                            "id": "932cbcd3-a356-48d3-bc98-9843b2e3392b"
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Allow users to update their user info (username)</td>
+                <td>/users/[id]</td>
+                <td>PUT</td>
+                <td>A JSON object holding data about the user which needs to be updated, structured like:
+                    <code>
+                        {
+                            "name": "Lara",
+                            "favoriteMovies": []
+                        }
+                    </code>
+                </td>
+                <td>A JSON object holding data about the updated user information. Example:
+                    <code>
+                        {
+                            "id": 2,
+                            "name": "Lara",
+                            "favoriteMovies": []
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Allow users to add a movie to their list of favorites</td>
+                <td>/users/[id]/[movieTitl]</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>Text message indicating whether the user added the movie successfully.</td>
+            </tr>
+            <tr>
+                <td>Allow users to remove a movie from their list of favorites</td>
+                <td>/users/[id]/[movieTitl]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>Text message indicating whether the user removed the movie successfully.</td>
+            </tr>
+            <tr>
+                <td>Allow existing users to deregister</td>
+                <td>/users/[id]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>Text message indicating whether the user deregister successfully.</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
