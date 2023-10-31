@@ -130,6 +130,18 @@ app.get('/movies/genre/:genreName', (req, res) => {
     }
 })
 
+// READ director by name
+app.get('/movies/directors/:directorName', (req, res) => {
+    const directorName = req.params.directorName;
+    const director = topMovies.find( movie => movie.director.directorName === directorName ).director;
+
+    if (director) {
+        res.status(200).json(director);
+    } else {
+        res.status(400).send('There is no such director.')
+    }
+})
+
 app.use(express.static('public'));
 
 // error handling
