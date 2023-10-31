@@ -20,6 +20,10 @@ let topMovies = [
         genre: {
             genreName: 'Horror',
             description: 'Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes.'
+        },
+        director: {
+            directorName: 'Wes Craven',
+            birth: '1939'
         }
     },
     {
@@ -28,6 +32,10 @@ let topMovies = [
         genre: {
             genreName: 'Fantasy',
             description: 'Fantasy is a genre of speculative fiction involving magical elements, typically set in a fictional universe and usually inspired by mythology or folklore.'
+        },
+        director: {
+            directorName: 'Griffin Dunne',
+            birth: '1955'
         }
     },
     {
@@ -36,6 +44,10 @@ let topMovies = [
         genre: {
             genreName: 'Horror',
             description: 'Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes.'
+        },
+        director: {
+            directorName: 'Jim Gillespie',
+            birth: ''
         }
     },
     {
@@ -44,6 +56,10 @@ let topMovies = [
         genre: {
             genreName: 'Horror',
             description: 'Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes.'
+        },
+        director: {
+            directorName: 'John Carpenter',
+            birth: '1948'
         }
     },
     {
@@ -52,6 +68,10 @@ let topMovies = [
         genre: {
             genreName: 'Horror',
             description: 'Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes.'
+        },
+        director: {
+            directorName: 'Wes Craven',
+            birth: '1939'
         }
     },
     {
@@ -60,7 +80,11 @@ let topMovies = [
         genre: {
             genreName: 'Comedy Horror',
             description: 'Comedy horror is a literary, television, and film genre that combines elements of comedy and horror fiction.'
-        } 
+        },
+        director: {
+            directorName: 'Halina Reijn',
+            birth: '1975'
+        }
     },
     {
         title: 'Orphan',
@@ -68,6 +92,10 @@ let topMovies = [
         genre: {
             genreName: 'Horror',
             description: 'Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes.'
+        },
+        director: {
+            directorName: 'Jaume Collet-Serra',
+            birth: '1974'
         }
     },
     {
@@ -76,6 +104,10 @@ let topMovies = [
         genre: {
             genreName: 'Thriller',
             description: 'Thrillers are characterized and defined by the moods they elicit, giving their audiences heightened feelings of suspense, excitement, surprise, anticipation and anxiety.'
+        },
+        director: {
+            directorName: 'Nimród Antal',
+            birth: '1973'
         }
     },
     {
@@ -84,7 +116,11 @@ let topMovies = [
         genre: {
             genreName: 'Comedy Horror',
             description: 'Comedy horror is a literary, television, and film genre that combines elements of comedy and horror fiction.'
-        } 
+        },
+        director: {
+            directorName: 'McG',
+            birth: '1968'
+        }
     },
     {
         title: 'Totally Killer',
@@ -92,7 +128,11 @@ let topMovies = [
         genre: {
             genreName: 'Comedy Horror',
             description: 'Comedy horror is a literary, television, and film genre that combines elements of comedy and horror fiction.'
-        } 
+        },
+        director: {
+            directorName: 'Nahnatchka Khan',
+            birth: '1973'
+        }
     }
 ]
 
