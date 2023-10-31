@@ -96,16 +96,27 @@ let topMovies = [
     }
 ]
 
-// GET main page
+// READ main page
 app.get('/', (req, res) => {
     res.send('Welcome to my movie page!');
 });
 
-// GET movie list
+// READ movie list
 app.get('/movies', (req, res) => {
     res.status(200).json(topMovies);
 });
 
+// READ movie by title
+app.get('/movies/:title', (req, res) => {
+    const title = req.params.title;
+    const movie = topMovies.find( movie => movie.title === title );
+
+    if (movie) {
+        res.status(200).json(movie);
+    } else {
+        res.status(400).send('There is no such movie.')
+    }
+})
 app.use(express.static('public'));
 
 // error handling
