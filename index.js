@@ -1,7 +1,10 @@
 const express = require('express'),
- morgan = require('morgan');
-
+ morgan = require('morgan'),
+ bodyParser = require('body-parser'),
+ uuid = require('uuid');
 const app = express();
+
+app.use(bodyParser.json()); //any time using req.body, the data will be expected to be in JSON format
 
 // log all requests
 app.use(morgan('common'));
