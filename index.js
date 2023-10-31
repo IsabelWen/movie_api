@@ -54,13 +54,14 @@ let topMovies = [
     }
 ]
 
-// GET request
+// GET main page
 app.get('/', (req, res) => {
     res.send('Welcome to my movie page!');
 });
 
+// GET movie list
 app.get('/movies', (req, res) => {
-    res.json(topMovies);
+    res.status(200).json(topMovies);
 });
 
 app.use(express.static('public'));
