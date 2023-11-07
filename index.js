@@ -17,7 +17,7 @@ const Users = Models.User;
 mongoose.connect('mongodb://127.0.0.1:27017/movieDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-// CREATE new user
+// CREATE new user [UPDATED]
 /* expect JSON in this format
 {
   ID: Integer,
@@ -52,7 +52,7 @@ app.post('/users', async (req, res) => {
         });
 });
 
-// READ all users
+// READ all users [NEW]
 app.get('/users', async (req, res) => {
     await Users.find()
         .then((users) => {
@@ -64,7 +64,7 @@ app.get('/users', async (req, res) => {
         });
 });
 
-// READ a user by username
+// READ a user by username [NEW]
 app.get('/users/:Username', async (req, res) => {
     await Users.findOne({ Username: req.params.Username })
         .then((user) => {
@@ -76,7 +76,34 @@ app.get('/users/:Username', async (req, res) => {
         });
 });
 
-// UPDATE user information
+// UPDATE user information by username [NEW]
+/* expect JSON in this format
+{
+  Username: String, (required)
+  Password: String, (required)
+  Email: String, (required)
+  Birthday: Date
+}*/
+app.put('/users/:Username', async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+        {
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+        }
+    },
+    { new: true }) // This line makes sure that the updated document is returned
+    .then((updatedUser) => {
+        res.json(updatedUser);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
+});
+
+// UPDATE user information by ID [Need UPDATE]
 app.put('/users/:id', (req, res) => {
     const id = req.params.id;
     const updatedUser = req.body;
@@ -91,7 +118,7 @@ app.put('/users/:id', (req, res) => {
     }
 })
 
-// CREATE new favorite movie for user
+// CREATE new favorite movie for user [UPDATED]
 app.post('/users/:id/:movieTitle', (req, res) => {
     const id = req.params.id;
     const movieTitle = req.params.movieTitle;
