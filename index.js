@@ -11,6 +11,7 @@ app.use(bodyParser.json()); //any time using req.body, the data will be expected
 app.use(morgan('common'));
 
 // Require Mongoose models from models.js
+const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 mongoose.connect('mongodb://127.0.0.1:27017/movieDB', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -25,7 +26,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/movieDB', { useNewUrlParser: true, u
   Email: String,
   Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
     await Users.findOne({ Username: req.body.Username})
         .then((user) => {
             if (user) {
