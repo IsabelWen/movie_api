@@ -150,20 +150,6 @@ app.delete('/users/:Username', async (req, res) => {
         });
 });
 
-// DELETE userby ID
-app.delete('/users/:id', (req, res) => {
-    const id = req.params.id;
-
-    let user = users.find( user => user.id == id );
-
-
-    if (user) {
-        users = users.filter( user => user.id != id);
-        res.status(200).send('User ' + id + ' has been deleted.');
-    } else {
-        res.status(400).send('There is no such user')
-    }
-})
 
 // READ index page
 app.get('/', (req, res) => {
