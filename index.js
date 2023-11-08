@@ -218,20 +218,20 @@ app.get('/movies/genres/:genreName', async (req, res) => {
     .catch((err) => {
         console.error(err);
         res.status(500).send('Error: ' + err);
-    })
-})
+    });
+});
 
-// READ director by name
-app.get('/movies/directors/:directorName', (req, res) => {
-    const directorName = req.params.directorName;
-    const director = topMovies.find( movie => movie.director.directorName === directorName ).director;
-
-    if (director) {
-        res.status(200).json(director);
-    } else {
-        res.status(400).send('There is no such director.')
-    }
-})
+// READ director by name [UPDATED]
+app.get('/movies/directors/:directorName', async (req, res) => {
+    await Movies.findOne({ 'Director.Name': req.params.directorName })
+        .then((movie) => {
+            res.json(movie.Director);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
 app.use(express.static('public'));
 
