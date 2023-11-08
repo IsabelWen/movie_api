@@ -103,20 +103,6 @@ app.put('/users/:Username', async (req, res) => {
     })
 });
 
-// UPDATE user information by ID [Need UPDATE]
-app.put('/users/:id', (req, res) => {
-    const id = req.params.id;
-    const updatedUser = req.body;
-
-    let user = users.find( user => user.id == id );
-
-    if (user) {
-        user.name = updatedUser.name;
-        res.status(200).json(user);
-    } else {
-        res.status(400).send('There is no such user')
-    }
-})
 
 // CREATE new favorite movie for user [UPDATED]
 app.post('/users/:Username/movies/:MovieID', async (req, res) => {
