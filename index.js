@@ -17,7 +17,7 @@ const Users = Models.User;
 mongoose.connect('mongodb://127.0.0.1:27017/movieDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-// CREATE new user [UPDATED]
+// CREATE new user
 /* expect JSON in this format
 {
   ID: Integer,
@@ -52,7 +52,7 @@ app.post('/users', async (req, res) => {
         });
 });
 
-// READ all users [NEW]
+// READ all users
 app.get('/users', async (req, res) => {
     await Users.find()
         .then((users) => {
@@ -64,7 +64,7 @@ app.get('/users', async (req, res) => {
         });
 });
 
-// READ a user by username [NEW]
+// READ a user by username
 app.get('/users/:Username', async (req, res) => {
     await Users.findOne({ Username: req.params.Username })
         .then((user) => {
@@ -76,7 +76,7 @@ app.get('/users/:Username', async (req, res) => {
         });
 });
 
-// UPDATE user information by username [NEW]
+// UPDATE user information by username
 /* expect JSON in this format
 {
   Username: String, (required)
@@ -104,7 +104,7 @@ app.put('/users/:Username', async (req, res) => {
 });
 
 
-// CREATE new favorite movie for user [UPDATED]
+// CREATE new favorite movie for user
 app.post('/users/:Username/movies/:MovieID', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $push: { FavoriteMovies: req.params.MovieID }
@@ -119,7 +119,7 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
     });
 });
 
-// DELETE favorite movie for user [UPDATED]
+// DELETE favorite movie for user
 app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $pull: { FavoriteMovies: req.params.MovieID }
@@ -134,7 +134,7 @@ app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
     });
 });
 
-// DELETE user by Username [NEW]
+// DELETE user by Username
 app.delete('/users/:Username', async (req, res) => {
     await Users.findOneAndDelete({ Username: req.params.Username })
         .then((user) => {
@@ -156,7 +156,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to my movie page!');
 });
 
-// READ movie list [UPDATED]
+// READ movie list
 app.get('/movies', async (req, res) => {
     await Movies.find()
         .then((movies) => {
@@ -168,9 +168,9 @@ app.get('/movies', async (req, res) => {
         });
 });
 
-// READ movie by name [UPDATED]
-app.get('/movies/:name', async (req, res) => {
-    await Movies.findOne({ Name: req.params.Name })
+// READ movie by name
+app.get('/movies/:title', async (req, res) => {
+    await Movies.findOne({ Name: req.params.Title })
         .then((movie) => {
             res.json(movie);
         })
@@ -180,7 +180,7 @@ app.get('/movies/:name', async (req, res) => {
         });
 });
 
-// READ genre by name [UPDATED]
+// READ genre by name
 app.get('/movies/genres/:genreName', async (req, res) => {
     await Movies.findOne({ 'Genre.Name': req.params.genreName })
     .then((movie) => {
@@ -192,7 +192,7 @@ app.get('/movies/genres/:genreName', async (req, res) => {
     });
 });
 
-// READ director by name [UPDATED]
+// READ director by name
 app.get('/movies/directors/:directorName', async (req, res) => {
     await Movies.findOne({ 'Director.Name': req.params.directorName })
         .then((movie) => {
