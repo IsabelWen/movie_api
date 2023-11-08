@@ -198,7 +198,7 @@ app.get('/movies', async (req, res) => {
 });
 
 // READ movie by name [UPDATED]
-app.get('/movies/:title', async (req, res) => {
+app.get('/movies/:name', async (req, res) => {
     await Movies.findOne({ Name: req.params.Name })
         .then((movie) => {
             res.json(movie);
@@ -209,16 +209,16 @@ app.get('/movies/:title', async (req, res) => {
         });
 });
 
-// READ genre by name
-app.get('/movies/genre/:genreName', (req, res) => {
-    const genreName = req.params.genreName;
-    const genre = topMovies.find( movie => movie.genre.genreName === genreName ).genre;
-
-    if (genre) {
-        res.status(200).json(genre);
-    } else {
-        res.status(400).send('There is no such genre.')
-    }
+// READ genre by name [UPDATED]
+app.get('/movies/genre/:name', async (req, res) => {
+    await Movies.findOne({ Name: req.params.Name })
+    .then((genre) => {
+        res.json(genre.Description);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
 })
 
 // READ director by name
