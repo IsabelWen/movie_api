@@ -210,10 +210,10 @@ app.get('/movies/:name', async (req, res) => {
 });
 
 // READ genre by name [UPDATED]
-app.get('/movies/genre/:name', async (req, res) => {
-    await Movies.findOne({ Name: req.params.Name })
-    .then((genre) => {
-        res.json(genre.Description);
+app.get('/movies/genres/:genreName', async (req, res) => {
+    await Movies.findOne({ 'Genre.Name': req.params.genreName })
+    .then((movie) => {
+        res.json(movie.Genre);
     })
     .catch((err) => {
         console.error(err);
