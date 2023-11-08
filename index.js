@@ -185,9 +185,16 @@ app.get('/', (req, res) => {
     res.send('Welcome to my movie page!');
 });
 
-// READ movie list
-app.get('/movies', (req, res) => {
-    res.status(200).json(topMovies);
+// READ movie list [UPDATED]
+app.get('/movies', async (req, res) => {
+    await Movies.find()
+        .then((movies) => {
+            res.status(201).json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
 });
 
 // READ movie by title
