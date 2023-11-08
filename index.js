@@ -149,7 +149,23 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
     }
 })
 
-// DELETE user
+// DELETE user by Username [NEW]
+app.delete('/users/:Username', async (req, res) => {
+    await Users.findOneandRemove({ Username: req.params.Username })
+        .then((user) => {
+            if (!user) {
+                res.status(400).send(req.params.Username + ' was not found');
+            } else {
+                res.status(200).send(req.params.Username + ' was deleted.');
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status.apply(500).send('Error: ' + err);
+        });
+});
+
+// DELETE userby ID
 app.delete('/users/:id', (req, res) => {
     const id = req.params.id;
 
