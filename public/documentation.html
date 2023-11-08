@@ -37,16 +37,22 @@
                 <td>A JSON object holding data about a single movie, containing title, year, genre, director. Example:
                     <code>
                         {
-                            "title": "Halloween",
-                            "year": "1978",
-                            "genre": {
-                                "genreName": "Horror",
-                                "description": "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes."
+                            "Genre": {
+                                "Name": "Horror",
+                                "Description": "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes."
                             },
-                            "director": {
-                                "directorName": "John Carpenter",
-                                "birth": "1948"
-                            }
+                            "Director": {
+                                "Name": "Wes Craven",
+                                "Bio": "Wes Craven has become synonymous with genre bending and innovative horror, challenging audiences with his bold vision.",
+                                "Birth": "1939",
+                                "Death": "2015"
+                            },
+                            "_id": "65493be802d2f93ced6e02c0",
+                            "Title": "Scream",
+                            "Description": "A year after the murder of her mother, a teenage girl is terrorized by a masked killer who targets her and her friends by using scary movies as part of a deadly game.",
+                            "ImagePath": "scream.png",
+                            "Featured": true,
+                            "Year": "1996"
                         }
                     </code>
                 </td>
@@ -59,8 +65,8 @@
                 <td>A JSON object holding data about a single genre, containing genre name, description. Example:
                     <code>
                         {
-                            "genreName": "Horror",
-                            "description": "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes."
+                            "Name": "Horror",
+                            "Description": "Horror is a film genre that seeks to elicit fear or disgust in its audience for entertainment purposes."
                         }
                     </code>
                 </td>
@@ -70,11 +76,41 @@
                 <td>/movies/directors/[directorName]</td>
                 <td>GET</td>
                 <td>None</td>
-                <td>A JSON object holding data about a single director, containing director name, birth year. Example:
+                <td>A JSON object holding data about a single director, containing director name, bio, birth and death year. Example:
                     <code>
                         {
-                            "directorName": "Nahnatchka Khan",
-                            "birth": "1973"
+                            "Name": "Wes Craven",
+                            "Bio": "Wes Craven has become synonymous with genre bending and innovative horror, challenging audiences with his bold vision.",
+                            "Birth": "1939",
+                            "Death": "2015"
+                        }
+                    </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return a list of ALL users</td>
+                <td>/users</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about all users</td>
+            </tr>
+            <tr>
+                <td>Return data about a single user by username</td>
+                <td>/users/[Username]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single user, containing username, password, email, birthday, favorite movies. Example:
+                    <code>
+                        {
+                            "_id": "654955e502d2f93ced6e02cc",
+                            "Username": "Lara",
+                            "Password": "password3",
+                            "Email": "user3@email.com",
+                            "Birthday": "1997-04-18T00:00:00.000Z",
+                            "FavoriteMovies": [
+                                "6549494c02d2f93ced6e02c3",
+                                "65494a9102d2f93ced6e02c4"
+                            ]
                         }
                     </code>
                 </td>
@@ -86,60 +122,102 @@
                 <td>A JSON object holding data about the user to add, structured like:
                     <code>
                         {
-                            "name": "Lara",
-                            "favoriteMovies": []
+                            ID: Integer,
+                            Username: String,
+                            Password: String,
+                            Email: String,
+                            Birthday: Date
                         }
                     </code>
                 </td>
                 <td>A JSON object holding data about the user that was added, including an ID. Example:
                     <code>
                         {
-                            "name": "Lara",
-                            "favoriteMovies": [],
-                            "id": "932cbcd3-a356-48d3-bc98-9843b2e3392b"
+                            "Username": "Testuser",
+                            "Password": "1234",
+                            "Email": "test@mail.com",
+                            "FavoriteMovies": [],
+                            "_id": "654b8b77d73c652a6f31a9f2",
+                            "__v": 0
                         }
                     </code>
                 </td>
             </tr>
             <tr>
-                <td>Allow users to update their user info (username)</td>
-                <td>/users/[id]</td>
+                <td>Allow users to update their user info by Username</td>
+                <td>/users/[Username]</td>
                 <td>PUT</td>
                 <td>A JSON object holding data about the user which needs to be updated, structured like:
                     <code>
                         {
-                            "name": "Lara",
-                            "favoriteMovies": []
+                            Username: req.body.Username,
+                            Password: req.body.Password,
+                            Email: req.body.Email,
+                            Birthday: req.body.Birthday
                         }
                     </code>
                 </td>
                 <td>A JSON object holding data about the updated user information. Example:
                     <code>
                         {
-                            "id": 2,
-                            "name": "Lara",
-                            "favoriteMovies": []
+                            "_id": "654b859f9a9bce7911eca5c5",
+                            "Username": "Isy",
+                            "Password": "newpassword",
+                            "Email": "isy@mail.com",
+                            "FavoriteMovies": [
+                                "65493d8102d2f93ced6e02c1",
+                                "65493be802d2f93ced6e02c0"
+                            ],
+                            "__v": 0,
+                            "Birthday": "1997-12-13T00:00:00.000Z"
                         }
                     </code>
                 </td>
             </tr>
             <tr>
                 <td>Allow users to add a movie to their list of favorites</td>
-                <td>/users/[id]/[movieTitl]</td>
+                <td>/users/[Username]/movies/[MovieID]</td>
                 <td>POST</td>
                 <td>None</td>
-                <td>Text message indicating whether the user added the movie successfully.</td>
+                <td>A JSON object holding data about the updated user information. Example:
+                    <code>
+                        {
+                            "_id": "6549568202d2f93ced6e02cd",
+                            "Username": "Ryan",
+                            "Password": "4321",
+                            "Email": "test2@mail.com",
+                            "Birthday": "1993-02-02T00:00:00.000Z",
+                            "FavoriteMovies": [
+                                "65494d2b02d2f93ced6e02c6",
+                                "65494bd602d2f93ced6e02c5"
+                            ]
+                        }
+                    </code>
+                </td>
             </tr>
             <tr>
                 <td>Allow users to remove a movie from their list of favorites</td>
-                <td>/users/[id]/[movieTitl]</td>
+                <td>/users/[Username]/movies/[MovieID]</td>
                 <td>DELETE</td>
                 <td>None</td>
-                <td>Text message indicating whether the user removed the movie successfully.</td>
+                <td>A JSON object holding data about the updated user information. Example:
+                    <code>
+                        {
+                            "_id": "6549568202d2f93ced6e02cd",
+                            "Username": "Ryan",
+                            "Password": "4321",
+                            "Email": "test2@mail.com",
+                            "Birthday": "1993-02-02T00:00:00.000Z",
+                            "FavoriteMovies": [
+                                "65494d2b02d2f93ced6e02c6"
+                            ]
+                        }
+                    </code>
+                </td>
             </tr>
             <tr>
                 <td>Allow existing users to deregister</td>
-                <td>/users/[id]</td>
+                <td>/users/[Username]</td>
                 <td>DELETE</td>
                 <td>None</td>
                 <td>Text message indicating whether the user deregister successfully.</td>
