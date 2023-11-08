@@ -197,17 +197,17 @@ app.get('/movies', async (req, res) => {
         });
 });
 
-// READ movie by title
-app.get('/movies/:title', (req, res) => {
-    const title = req.params.title;
-    const movie = topMovies.find( movie => movie.title === title );
-
-    if (movie) {
-        res.status(200).json(movie);
-    } else {
-        res.status(400).send('There is no such movie.')
-    }
-})
+// READ movie by name [UPDATED]
+app.get('/movies/:title', async (req, res) => {
+    await Movies.findOne({ Name: req.params.Name })
+        .then((movie) => {
+            res.json(movie);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
 // READ genre by name
 app.get('/movies/genre/:genreName', (req, res) => {
