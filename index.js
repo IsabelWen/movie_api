@@ -51,7 +51,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/movieDB', { useNewUrlParser: true, u
   Birthday: Date
 }*/
 app.post('/users', async (req, res) => {
-    await Users.findOne({ Username: req.body.Username})
+    let hashedPassword = Users.hashedPassword(req.body.Password);
+    await Users.findOne({ Username: req.body.Username}) // Search to see if a user with the requested username already exists
         .then((user) => {
             if (user) {
                 return res.status(400).send(req.body.Username + 'already exists');
@@ -59,7 +60,7 @@ app.post('/users', async (req, res) => {
                 Users
                     .create({
                         Username: req.body.Username,
-                        Password: req.body.Password,
+                        Password: hashedPassword,
                         Email: req.body.Email,
                         Birthday: req.body.Birthday
                     })
