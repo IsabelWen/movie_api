@@ -2,8 +2,24 @@ const express = require('express'),
  morgan = require('morgan'),
  bodyParser = require('body-parser'),
  uuid = require('uuid'),
- mongoose = require('mongoose');
+ mongoose = require('mongoose'),
+ cors = require('cors');
 const app = express();
+
+// CORS
+//app.use(cors()); --> will set the application to allow requests from all origins
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+app.use(cors({
+    origin: (origin, callback) => {
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+            let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+            return callback(new Error(message ), false);
+        }
+        return callback(null, true);
+    }
+}));
+
 
 app.use(bodyParser.json()); //any time using req.body, the data will be expected to be in JSON format
 app.use(bodyParser.urlencoded({ extended: true }));
