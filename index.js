@@ -6,6 +6,14 @@ const express = require('express'),
 const app = express();
 
 app.use(bodyParser.json()); //any time using req.body, the data will be expected to be in JSON format
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Import auth.js
+let auth = require('./auth')(app);
+
+// Import passport and passport.js 
+const passport = require('passport');
+require('./passport');
 
 // log all requests
 app.use(morgan('common'));
