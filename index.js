@@ -93,6 +93,11 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
   Birthday: Date
 }*/
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    // Condition to check user authorization
+    if(req.user.Username !== req.params.Username){
+        return res.status(400).send('Permission denied');
+    }
+    // Condition ends here
     await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
         {
             Username: req.body.Username,
