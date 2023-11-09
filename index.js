@@ -170,7 +170,7 @@ app.get('/movies', async (req, res) => {
 
 // READ movie by name
 app.get('/movies/:title', async (req, res) => {
-    await Movies.findOne({ Name: req.params.Title })
+    await Movies.findOne({ Title: req.params.title })
         .then((movie) => {
             res.json(movie);
         })
