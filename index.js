@@ -3,7 +3,8 @@ const express = require('express'),
  bodyParser = require('body-parser'),
  uuid = require('uuid'),
  mongoose = require('mongoose'),
- cors = require('cors');
+ cors = require('cors')
+ { check, validationResult } = require('express-validator');
 const app = express();
 
 // CORS
@@ -36,6 +37,7 @@ app.use(morgan('common'));
 
 // Require Mongoose models from models.js
 const Models = require('./models.js');
+const { validationResult } = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
 mongoose.connect('mongodb://127.0.0.1:27017/movieDB', { useNewUrlParser: true, useUnifiedTopology: true });
