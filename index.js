@@ -3,7 +3,7 @@ const express = require('express'),
  bodyParser = require('body-parser'),
  uuid = require('uuid'),
  mongoose = require('mongoose'),
- cors = require('cors')
+ cors = require('cors'),
  { check, validationResult } = require('express-validator');
 const app = express();
 
