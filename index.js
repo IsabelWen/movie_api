@@ -67,7 +67,7 @@ app.post('/users',
         return res.status(422).json({ errors: errors.array() });
     }
 
-    let hashedPassword = Users.hashedPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOne({ Username: req.body.Username}) // Search to see if a user with the requested username already exists
         .then((user) => {
             if (user) {
@@ -144,7 +144,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         return res.status(422).json({ errors: errors.array() });
     }
 
-    let hashedPassword = Users.hashedPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
         {
             Username: req.body.Username,
