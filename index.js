@@ -220,7 +220,7 @@ app.get('/', (req, res) => {
 });
 
 // READ movie list
-app.get('/movies', { session: false }), async (req, res) => {
+app.get('/movies', async (req, res) => {
     await Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
