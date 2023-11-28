@@ -121,9 +121,9 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         check('Email', 'Email does not appear to be valid').isEmail()
     ], async (req, res) => {
     // Condition to check user authorization
-    if(req.user.Username !== req.params.Username){
+    /*if(req.user.Username !== req.params.Username){
         return res.status(400).send('Permission denied');
-    }
+    }*/
     // Condition ends here
 
     // check the validation object for errors
