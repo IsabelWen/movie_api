@@ -132,13 +132,17 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         return res.status(422).json({ errors: errors.array() });
     }
 
-    let hashedPassword = Users.hashPassword(req.body.Password);
+    // gives you data already in the database
+    let oldData = Users.findOne({ Username: req.params.Username }); 
+
+    let hashedPassword = req.body.Password? Users.hashPassword(req.body.Password) : Users.findOne({ Username: req.params.Username }).Password;
     await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
         {
-            Username: req.body.Username,
-            Password: hashedPassword,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
+            // If there is new data update the database with new data, else use old data
+            Username: req.body.Username || oldData.Username,
+            Password: hashedPassword, // see hashed variable above
+            Email: req.body.Email || oldData.Email,
+            Birthday: req.body.Birthday || oldData.Birthday
         }
     },
     { new: true }) // This line makes sure that the updated document is returned
