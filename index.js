@@ -8,7 +8,7 @@ const express = require('express'),
 const app = express();
 
 // CORS
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:4200/', 'http://testsite.com', 'http://localhost:1234', 'https://mymovie-api.netlify.app'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:4200', 'http://testsite.com', 'http://localhost:1234', 'https://mymovie-api.netlify.app'];
 //allow specific set of origins to access your API
 app.use(cors({
     origin: (origin, callback) => {
