@@ -46,7 +46,8 @@ mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnified
 
 /**
  * CREATE new user
- * 
+ * @function
+ * @name signupUser
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @throws {Error} - If there is an error when creating the new user. 
@@ -94,7 +95,8 @@ app.post('/users',
 
 /**
  * READ all users
- * 
+ * @function
+ * @name getAllUsers
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @throws {Error} - If there is an error while retrieving users from the database.
@@ -113,7 +115,8 @@ app.get('/users', passport.authenticate('jwt', { session: false }), async (req, 
 
 /**
  * READ a user by username
- * 
+ * @function
+ * @name getOneUser
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {string} req.params.Username - The username of the user to retrieve.
@@ -133,7 +136,8 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
 
 /**
  * UPDATE user information by username
- * 
+ * @function
+ * @name updateUser
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {string} req.params.Username - The username of the user to update.
@@ -180,7 +184,8 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 
 /**
  * CREATE new favorite movie for user
- * 
+ * @function
+ * @name addFavMovie
  * @param {Object} req - Express request object.
  * @param {Object} req.user - User object obtained from JWT authentication.
  * @param {string} req.params.Username - The username of the user.
@@ -210,7 +215,8 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 
 /**
  * DELETE favorite movie for user
- * 
+ * @function
+ * @name deleteFavMovie
  * @param {Object} req - Express request object.
  * @param {Object} req.user - User object obtained from JWT authentication.
  * @param {string} req.params.Username - The username of the user.
@@ -240,7 +246,8 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 /**
  * DELETE user by Username
- * 
+ * @function
+ * @name deleteUser
  * @param {Object} req - Express request object.
  * @param {Object} req.user - User object obtained from JWT authentication.
  * @param {string} req.params.Username - The username of the user to delete.
@@ -271,7 +278,8 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 
 /**
  * READ index page
- * 
+ * @function
+ * @name getIndexPage
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @returns {Object} - Sends a string response "Welcome to my movie page!".
@@ -282,7 +290,8 @@ app.get('/', (req, res) => {
 
 /**
  * READ movie list
- * 
+ * @function
+ * @name getAllMovies
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @throws {Error} - If there is an error while retrieving movies from the database.
@@ -301,7 +310,8 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
 
 /**
  * READ movie by name
- * 
+ * @function
+ * @name getOneMovie
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {string} req.params.title - The title of the movie to retrieve.
@@ -321,7 +331,8 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), asyn
 
 /**
  * READ genre by name
- * 
+ * @function
+ * @name getGenre
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {string} req.params.genreName - The name of the genre to retrieve from the database.
@@ -341,7 +352,8 @@ app.get('/movies/genres/:genreName', passport.authenticate('jwt', { session: fal
 
 /**
  * READ director by name
- * 
+ * @function
+ * @name getDirector
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  * @param {string} req.params.directorName - The name of the director to retrieve from the database.
