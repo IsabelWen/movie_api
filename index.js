@@ -44,15 +44,14 @@ const Users = Models.User;
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
-// CREATE new user
-/* expect JSON in this format
-{
-  ID: Integer,
-  Username: String,
-  Password: String,
-  Email: String,
-  Birthday: Date
-}*/
+/**
+ * CREATE new user
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @throws {Error} - If there is an error when creating the new user. 
+ * @returns {Object} - Returns JSON response containing the new user.
+ */
 app.post('/users', 
     [
         check('Username', 'Username is required').isLength({min: 5}),
@@ -93,7 +92,14 @@ app.post('/users',
         });
 });
 
-// READ all users
+/**
+ * READ all users
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @throws {Error} - If there is an error while retrieving users from the database.
+ * @returns {Object} - Returns JSON response containing the all users.
+ */
 app.get('/users', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.find()
         .then((users) => {
@@ -105,7 +111,15 @@ app.get('/users', passport.authenticate('jwt', { session: false }), async (req, 
         });
 });
 
-// READ a user by username
+/**
+ * READ a user by username
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {string} req.params.Username - The username of the user to retrieve.
+ * @throws {Error} - If there is an error while retrieving the user from the database.
+ * @returns {Object} - Returns JSON response containing the user with this username.
+ */
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.findOne({ Username: req.params.Username })
         .then((user) => {
@@ -117,14 +131,15 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
         });
 });
 
-// UPDATE user information by username
-/* expect JSON in this format
-{
-  Username: String, (required)
-  Password: String, (required)
-  Email: String, (required)
-  Birthday: Date
-}*/
+/**
+ * UPDATE user information by username
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {string} req.params.Username - The username of the user to update.
+ * @throws {Error} - If there is an error while validating input or updating user data in the database.
+ * @returns {Object} - JSON response containing the updated user.
+ */
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
     [
         check('Username', 'Username is required').isLength({min: 5}),
@@ -132,11 +147,6 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         check('Password', 'Password is required'), //.not().isEmpty()
         check('Email', 'Email does not appear to be valid').isEmail()
     ], async (req, res) => {
-    // Condition to check user authorization
-    /*if(req.user.Username !== req.params.Username){
-        return res.status(400).send('Permission denied');
-    }*/
-    // Condition ends here
 
     // check the validation object for errors
     let errors = validationResult(req);
@@ -168,7 +178,17 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 
-// CREATE new favorite movie for user
+/**
+ * CREATE new favorite movie for user
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} req.user - User object obtained from JWT authentication.
+ * @param {string} req.params.Username - The username of the user.
+ * @param {string} req.params.MovieID - The ID of the movie to add to the user's favorites.
+ * @param {Object} res - Express response object.
+ * @throws {Error} - If there is an error while updating user data in the database.
+ * @returns {Object} - Returns JSON response containing the updated user's information.
+ */
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
     // Condition to check user authorization
     if(req.user.Username !== req.params.Username){
@@ -188,7 +208,17 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
     });
 });
 
-// DELETE favorite movie for user
+/**
+ * DELETE favorite movie for user
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} req.user - User object obtained from JWT authentication.
+ * @param {string} req.params.Username - The username of the user.
+ * @param {string} req.params.MovieID - The ID of the movie to remove from the user's favorites.
+ * @param {Object} res - Express response object.
+ * @throws {Error} - If there is an error while updating user data in the database.
+ * @returns {Object} - Returns JSON response containing the updated user's information.
+ */
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
     // Condition to check user authorization
     if(req.user.Username !== req.params.Username){
@@ -208,7 +238,16 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
     });
 });
 
-// DELETE user by Username
+/**
+ * DELETE user by Username
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} req.user - User object obtained from JWT authentication.
+ * @param {string} req.params.Username - The username of the user to delete.
+ * @param {Object} res - Express response object.
+ * @throws {Error} -  If there is an error while deleting the user from the database.
+ * @returns {Object} - Returns message indicating whether the user was successfully deleted or not.
+ */
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
     // Condition to check user authorization
     if(req.user.Username !== req.params.Username){
@@ -230,12 +269,25 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 
-// READ index page
+/**
+ * READ index page
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @returns {Object} - Sends a string response "Welcome to my movie page!".
+ */
 app.get('/', (req, res) => {
     res.send('Welcome to my movie page!');
 });
 
-// READ movie list
+/**
+ * READ movie list
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @throws {Error} - If there is an error while retrieving movies from the database.
+ * @returns {Object} - Returns JSON response containing all movies.
+ */
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Movies.find()
         .then((movies) => {
@@ -247,7 +299,15 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), async (req,
         });
 });
 
-// READ movie by name
+/**
+ * READ movie by name
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {string} req.params.title - The title of the movie to retrieve.
+ * @throws {Error} - If there is an error while retrieving the movie from the database.
+ * @returns {Object} - Returns JSON response containing the requested movie.
+ */
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Movies.findOne({ Title: req.params.title })
         .then((movie) => {
@@ -259,7 +319,15 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), asyn
         });
 });
 
-// READ genre by name
+/**
+ * READ genre by name
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {string} req.params.genreName - The name of the genre to retrieve from the database.
+ * @throws {Error} - If there is an error while retrieving genre from the database.
+ * @returns {Object} - Returns JSON response containing the genre object of the requested movies.
+ */
 app.get('/movies/genres/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Movies.findOne({ 'Genre.Name': req.params.genreName })
     .then((movie) => {
@@ -271,7 +339,15 @@ app.get('/movies/genres/:genreName', passport.authenticate('jwt', { session: fal
     });
 });
 
-// READ director by name
+/**
+ * READ director by name
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ * @param {string} req.params.directorName - The name of the director to retrieve from the database.
+ * @throws {Error} - If there is an error while retrieving director from the database.
+ * @returns {Object} - Returns JSON response containing the director object of the requested movies.
+ */
 app.get('/movies/directors/:directorName', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Movies.findOne({ 'Director.Name': req.params.directorName })
         .then((movie) => {
